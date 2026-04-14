@@ -1,0 +1,8 @@
+
+config {
+    type: "declaration",
+    database: "amrl-data-prd",
+    schema: "SANDBOX_ML",
+    name: "OBT_FACT_GESTION_PERSONAS_09042026",
+    description: "Malla de datos con la información de las oportunidades."
+}
