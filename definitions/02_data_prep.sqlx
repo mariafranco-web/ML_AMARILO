@@ -1,0 +1,11 @@
+
+config {
+    type: "table",
+    description: "Tabla con los datos ingestados y preparados para el modelo de ML."
+}
+
+
+SELECT
+ACEPTAR_VENTA
+FROM  
+${ref("OBT_FACT_OPORTUNIDAD_09042026")}
