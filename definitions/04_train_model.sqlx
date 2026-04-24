@@ -4,6 +4,9 @@ js {
     'BOOSTED_TREE_CLASSIFIER', 
     'RANDOM_FOREST_CLASSIFIER'
   ];
+  
+  const dataset_objetivo = 'SANDBOX_ML_MAFE_WORKSHOP';
+  const proyecto = dataform.projectConfig.defaultDatabase;
 }
 
 config {
@@ -14,10 +17,13 @@ config {
 
 ---
 
-${tipos_modelos.map(tipo => `
-
--- Construimos el nombre manualmente usando las variables de configuración para evitar el error de backticks
-CREATE OR REPLACE MODEL \`${dataform.projectConfig.defaultDatabase}.${dataform.projectConfig.defaultSchema}.entrenamiento_multiple_modelos_${tipo}\`
+${tipos_modelos.map(tipo => {
+  // Definimos las referencias fuera del string para evitar conflictos de comillas
+  const trainingData = ref("TRAINING_DATA");
+  const testData = ref("TEST_DATA");
+  
+  return `
+CREATE OR REPLACE MODEL \`${proyecto}.${dataset_objetivo}.model_${tipo}\`
 OPTIONS(
   MODEL_TYPE = '${tipo}',
   INPUT_LABEL_COLS = ['ACEPTAR_VENTA'],
@@ -30,13 +36,13 @@ OPTIONS(
 SELECT 
   * EXCEPT(BK_PERSONA, BK_NUMERO_OP),
   FALSE AS split_col
-FROM ${ref("TRAINING_DATA")}
+FROM ${trainingData}
 
 UNION ALL
 
 SELECT 
   * EXCEPT(BK_PERSONA, BK_NUMERO_OP),
   TRUE AS split_col
-FROM ${ref("TEST_DATA")};
-
-`).join('\n---\n')}
+FROM ${testData};
+`;
+}).join('\n---\n')}
