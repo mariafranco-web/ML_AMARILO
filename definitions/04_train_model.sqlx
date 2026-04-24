@@ -20,7 +20,7 @@ config {
 
 ${tipos_modelos.map(tipo => `
 
-CREATE OR REPLACE MODEL \`${dataform.projectConfig.defaultDatabase}.${dataform.projectConfig.defaultSchema}.model_${tipo}\`
+CREATE OR REPLACE MODEL \`${self()}.model_${tipo}\`
 OPTIONS(
   MODEL_TYPE = '${tipo}',
   INPUT_LABEL_COLS = ['ACEPTAR_VENTA'],
