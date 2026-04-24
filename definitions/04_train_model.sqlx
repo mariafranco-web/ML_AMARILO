@@ -1,5 +1,4 @@
 js {
-  // Definimos los 3 tipos de modelos que deseas entrenar
   const tipos_modelos = [
     'LOGISTIC_REG', 
     'BOOSTED_TREE_CLASSIFIER', 
@@ -14,13 +13,11 @@ config {
 }
 
 ---
-/* Utilizamos .map() para generar tres sentencias CREATE OR REPLACE MODEL.
-  Cada modelo tendrá un nombre basado en su tipo para diferenciarlos.
-*/
 
 ${tipos_modelos.map(tipo => `
 
-CREATE OR REPLACE MODEL ${self()}_${tipo}
+-- Construimos el nombre manualmente usando las variables de configuración para evitar el error de backticks
+CREATE OR REPLACE MODEL \`${dataform.projectConfig.defaultDatabase}.${dataform.projectConfig.defaultSchema}.entrenamiento_multiple_modelos_${tipo}\`
 OPTIONS(
   MODEL_TYPE = '${tipo}',
   INPUT_LABEL_COLS = ['ACEPTAR_VENTA'],
