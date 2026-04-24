@@ -1,58 +1,45 @@
+js {
+  // Definimos los 3 tipos de modelos que deseas entrenar
+  const tipos_modelos = [
+    'LOGISTIC_REG', 
+    'BOOSTED_TREE_CLASSIFIER', 
+    'RANDOM_FOREST_CLASSIFIER'
+  ];
+}
 
 config {
   type: "operations",
   hasOutput: true,
-  name: 'logreg_model'
+  name: "entrenamiento_multiple_modelos"
 }
 
-CREATE OR REPLACE MODEL ${self()}
+---
+/* Utilizamos .map() para generar tres sentencias CREATE OR REPLACE MODEL.
+  Cada modelo tendrá un nombre basado en su tipo para diferenciarlos.
+*/
 
+${tipos_modelos.map(tipo => `
+
+CREATE OR REPLACE MODEL \`${dataform.projectConfig.defaultDatabase}.${dataform.projectConfig.defaultSchema}.model_${tipo}\`
 OPTIONS(
-
-  MODEL_TYPE = 'LOGISTIC_REG' | '',
+  MODEL_TYPE = '${tipo}',
   INPUT_LABEL_COLS = ['ACEPTAR_VENTA'],
   CATEGORY_ENCODING_METHOD = 'ONE_HOT_ENCODING',
-  --AUTO_CLASS_WEIGHTS = TRUE,
   ENABLE_GLOBAL_EXPLAIN = TRUE,
   DATA_SPLIT_METHOD = 'CUSTOM',
   DATA_SPLIT_COL = 'split_col'
-  
-
-
 ) AS
 
-
 SELECT 
-* EXCEPT(BK_PERSONA, BK_NUMERO_OP ) ,
-False as split_col
-
+  * EXCEPT(BK_PERSONA, BK_NUMERO_OP),
+  FALSE AS split_col
 FROM ${ref("TRAINING_DATA")}
 
 UNION ALL
 
-SELECT * EXCEPT(BK_PERSONA, BK_NUMERO_OP ) ,
-True as split_col
+SELECT 
+  * EXCEPT(BK_PERSONA, BK_NUMERO_OP),
+  TRUE AS split_col
+FROM ${ref("TEST_DATA")};
 
-FROM ${ref("TEST_DATA")}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+`).join('\n---\n')}
