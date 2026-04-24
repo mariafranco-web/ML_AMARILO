@@ -1,0 +1,58 @@
+
+config {
+  type: "operations",
+  hasOutput: true,
+  name: 'logreg_model'
+}
+
+CREATE OR REPLACE MODEL ${self()}
+
+OPTIONS(
+
+  MODEL_TYPE = 'LOGISTIC_REG' | '',
+  INPUT_LABEL_COLS = ['ACEPTAR_VENTA'],
+  CATEGORY_ENCODING_METHOD = 'ONE_HOT_ENCODING',
+  --AUTO_CLASS_WEIGHTS = TRUE,
+  ENABLE_GLOBAL_EXPLAIN = TRUE,
+  DATA_SPLIT_METHOD = 'CUSTOM',
+  DATA_SPLIT_COL = 'split_col'
+  
+
+
+) AS
+
+
+SELECT 
+* EXCEPT(BK_PERSONA, BK_NUMERO_OP ) ,
+False as split_col
+
+FROM ${ref("TRAINING_DATA")}
+
+UNION ALL
+
+SELECT * EXCEPT(BK_PERSONA, BK_NUMERO_OP ) ,
+True as split_col
+
+FROM ${ref("TEST_DATA")}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
