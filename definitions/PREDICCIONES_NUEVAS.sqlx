@@ -1,6 +1,5 @@
 config {
     type: "table",
-    schema: "SANDBOX_ML_EDUARDO-WORKSHOP",
     tags: ["SERVING"],
 }
 
