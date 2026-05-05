@@ -1,16 +1,17 @@
 config {
   type: "operations",
   hasOutput: true,
-  name: 'logreg_model'
+  tags: ["TRAINING"],
+  name: "logreg_model" + dataform.projectConfig.vars.version_entrenamiento
 }
 
 CREATE OR REPLACE MODEL ${self()}
 
 OPTIONS(
-  MODEL_TYPE = 'LOGISTIC_REG' | '',
+  MODEL_TYPE = 'LOGISTIC_REG',
   INPUT_LABEL_COLS = ['ACEPTAR_VENTA'],
   CATEGORY_ENCODING_METHOD = 'ONE_HOT_ENCODING',
-  --AUTO_CLASS_WEIGHTS = TRUE,
+  AUTO_CLASS_WEIGHTS = TRUE,
   ENABLE_GLOBAL_EXPLAIN = TRUE,
   DATA_SPLIT_METHOD = 'CUSTOM',
   DATA_SPLIT_COL = 'split_col'
@@ -34,5 +35,3 @@ FROM ${ref("TEST_DATA")}
 
 
 
-
-para que ejecute diferentes modelos en la variable MODEL_TYPE

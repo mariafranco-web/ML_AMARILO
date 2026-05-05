@@ -1,0 +1,9 @@
+
+config {
+    type: "table",
+    tags: ["TRAINING"],
+    description: "Pesos/Coeficientes de la regresión logística"
+}
+
+
+SELECT * FROM ML.WEIGHTS(MODEL ${ref("logreg_model" + dataform.projectConfig.vars.version_entrenamiento)})

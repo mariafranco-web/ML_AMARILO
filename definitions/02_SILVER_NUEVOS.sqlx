@@ -3,8 +3,8 @@ config {
     type: "table",
     description: "Tabla con los datos ingestados y preparados para el modelo de ML.",
     dependencies: ["OBT_FACT_GESTION_PERSONAS_09042026", "OBT_FACT_OPORTUNIDAD_09042026"],
-    tags: ["TRAINING"],
-    name: "02_SILVER_DATA_PREP"
+    tags: ["SERVING"],
+    name: "02_SILVER_NUEVOS"
     
 }
 
@@ -111,15 +111,17 @@ WITH oportunidades_agrupadas AS (
 
 
   FROM `SANDBOX_ML.OBT_FACT_OPORTUNIDAD_09042026` AS A
+  --FROM ${ref('OBT_FACT_OPORTUNIDAD_09042026')} AS A
+
   WHERE ETAPA_DE_VENTA IN ('1. Visita','2. Separación','3. Promesa','4. Escrituración','5. Entrega')                                       
       AND CLASE_DE_ARTICULO IN ("APT", "CSA", "LOC", "OF") 
       --AND DATE(FECHA_DE_CREACION_OP) >= '2024-01-01'--DATE_SUB(CURRENT_DATE(), INTERVAL 1 YEAR
 
       -- los datos que tenemos van del 2024-01-01 al 2026-04-09
 
-      AND DATE(FECHA_DE_CREACION_OP) BETWEEN
-      DATE('${dataform.projectConfig.vars.fecha_inicio_train}')
-      AND DATE('${dataform.projectConfig.vars.fecha_fin_train}')
+      AND DATE(FECHA_DE_CREACION_OP) > DATE('${dataform.projectConfig.vars.fecha_fin_train}')
+
+      
   
 
   GROUP BY BK_NUMERO_OP

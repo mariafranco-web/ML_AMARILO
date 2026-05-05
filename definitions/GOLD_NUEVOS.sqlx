@@ -1,9 +1,9 @@
 config {
     type: "table",
     description: "Tabla con los datos ingestados y preparados para el modelo de ML.",
-    dependencies: ["02_SILVER_DATA_PREP"],
-    name: "03_GOLD_DATA_PREP",
-    tags: ["TRAINING"],
+    dependencies: ["02_SILVER_NUEVOS"],
+    name: "GOLD_NUEVOS",
+    tags: ["SERVING"],
     columns: {
       ACEPTAR_VENTA: "Variable objetivo del modelo, Y indica que el cliente llegó a la separación N indica que solo fue una visita",
       BK_PERSONA: "Llvae primaria para identificar al cliente.",
@@ -57,7 +57,7 @@ BK_NUMERO_OP
 
 
 
-FROM ${ref("02_SILVER_DATA_PREP")}
+FROM ${ref("02_SILVER_NUEVOS")}
 
 
 

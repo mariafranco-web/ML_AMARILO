@@ -2,3 +2,9 @@ defaultProject: amrl-data-prd
 defaultDataset: SANDBOX_ML
 defaultAssertionDataset: dataform_assertions
 dataformCoreVersion: 3.0.42
+vars: 
+    threshold_prediccion: "0.7"
+    fecha_inicio_train: "2024-01-01"
+    fecha_fin_train: "2026-04-01"
+    version_entrenamiento: "v2"
+    version_produccion: "v1"
