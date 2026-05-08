@@ -1,0 +1,8 @@
+
+config {
+    type: "declaration",
+    database: "amrl-data-prd",
+    schema: "SANDBOX_ML",
+    name: "VW_PRD_COTIZACIONES",
+    description: "Data base para el modelo de cotizaciones"
+}
