@@ -1,8 +1,8 @@
 config {
   type: "table",
+  database: "amrl-data-prd",
   schema: "WKS_COTIZACIONES_ML",
-  name: "03_Obt_Cotizaciones_split",
-  description: "Dataset con split estratificado 80/20"
+  name: "03_Obt_Cotizaciones_split"
 }
 
 WITH base_data AS (
