@@ -5,6 +5,10 @@ config {
   name: "03_Obt_Cotizaciones_split"
 }
 
+
+/*TRUE → datos de prueba (test)
+  FALSE → datos de entrenamiento (train)*/
+
 WITH base_data AS (
 
   SELECT 
