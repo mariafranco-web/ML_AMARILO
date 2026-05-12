@@ -1,7 +1,7 @@
 config {
   type: "operations",
   hasOutput: true, 
-  name: "logreg_model" + dataform.projectConfig.vars.version_entrenamiento
+  name: "logreg_model_cotizaciones" 
 }
 
 CREATE OR REPLACE MODEL ${self()}
