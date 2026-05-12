@@ -1,48 +1,30 @@
-js {
-  const tipos_modelos = [
-    'LOGISTIC_REG', 
-    'BOOSTED_TREE_CLASSIFIER', 
-    'RANDOM_FOREST_CLASSIFIER'
-  ];
-  
-  const dataset_objetivo = 'SANDBOX_ML_MAFE_WORKSHOP';
-  const proyecto = dataform.projectConfig.defaultDatabase;
-}
-
 config {
   type: "operations",
   hasOutput: true,
-  name: "entrenamiento_multiple_modelos"
+  tags: ["TRAINING"],
+  name: "logreg_model" + dataform.projectConfig.vars.version_entrenamiento
 }
 
----
+CREATE OR REPLACE MODEL ${self()}
 
-${tipos_modelos.map(tipo => {
-  // Definimos las referencias fuera del string para evitar conflictos de comillas
-  const trainingData = ref("TRAINING_DATA");
-  const testData = ref("TEST_DATA");
-  
-  return `
-CREATE OR REPLACE MODEL \`${proyecto}.${dataset_objetivo}.model_${tipo}\`
 OPTIONS(
-  MODEL_TYPE = '${tipo}',
+  MODEL_TYPE = 'LOGISTIC_REG',
   INPUT_LABEL_COLS = ['ACEPTAR_VENTA'],
   CATEGORY_ENCODING_METHOD = 'ONE_HOT_ENCODING',
+  AUTO_CLASS_WEIGHTS = TRUE,
   ENABLE_GLOBAL_EXPLAIN = TRUE,
   DATA_SPLIT_METHOD = 'CUSTOM',
-  DATA_SPLIT_COL = 'split_col'
+  DATA_SPLIT_COL = 'USO_ML'
 ) AS
 
-SELECT 
-  * EXCEPT(BK_PERSONA, BK_NUMERO_OP),
-  FALSE AS split_col
-FROM ${trainingData}
+
+SELECT * ,
+False as split_col
+FROM ${ref("TRAINING_DATA")}
 
 UNION ALL
 
-SELECT 
-  * EXCEPT(BK_PERSONA, BK_NUMERO_OP),
-  TRUE AS split_col
-FROM ${testData};
-`;
-}).join('\n---\n')}
+SELECT *  ,
+True as split_col
+FROM ${ref("TEST_DATA")}
+
