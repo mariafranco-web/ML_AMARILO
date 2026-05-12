@@ -18,13 +18,12 @@ OPTIONS(
 ) AS
 
 
-SELECT * ,
-False as split_col
-FROM ${ref("TRAINING_DATA")}
+SELECT * 
+FROM `WKS_COTIZACIONES_ML.02_Obt_Cotizaciones`
+WHERE USO_ML = 'Entrenamiento'
 
 UNION ALL
 
-SELECT *  ,
-True as split_col
-FROM ${ref("TEST_DATA")}
-
+SELECT * 
+FROM `WKS_COTIZACIONES_ML.02_Obt_Cotizaciones`
+WHERE USO_ML = 'Prueba'

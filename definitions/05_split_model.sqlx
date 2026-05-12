@@ -1,0 +1,31 @@
+config {
+  type: "table",
+  database: "amrl-data-prd",
+  schema: "WKS_COTIZACIONES_ML",
+  name: "03_Obt_Cotizaciones_split",
+  name: "datos_modelo_preparados",
+  description: "Dataset con split estratificado 80/20"
+}
+ 
+WITH base_data AS (
+  SELECT 
+    *,
+    RAND() as random_val
+  FROM 
+    `WKS_COTIZACIONES_ML.02_Obt_Cotizaciones`
+),
+stratified AS (
+  SELECT 
+    *,
+    -- NTILE divide los datos en 5 grupos (20% cada uno). 
+    -- Al particionar por la variable objetivo, aseguramos la representatividad.
+    NTILE(5) OVER(PARTITION BY COMPRO ORDER BY random_val) as fold
+  FROM base_data
+)
+ 
+SELECT * EXCEPT(random_val, fold),
+  -- Asignamos el fold 1 (20%) para testeo y el resto (80%) para entrenamiento
+  IF(fold = 1, TRUE, FALSE) as is_test
+FROM stratified
+
+
