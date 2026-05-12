@@ -1,7 +1,7 @@
 config {
   type: "operations",
   hasOutput: true, 
-  name: "logreg_model_cotizaciones" 
+  name: "04_logreg_model_cotizaciones" 
 }
 
 CREATE OR REPLACE MODEL ${self()}
