@@ -13,7 +13,7 @@ OPTIONS(
   AUTO_CLASS_WEIGHTS = TRUE, --balanceo automatico evita sesgo hacia la clase mayoritaria
   ENABLE_GLOBAL_EXPLAIN = TRUE, --identifica que variables influyen mas
   DATA_SPLIT_METHOD = 'CUSTOM', --no requiere split automatico
-  DATA_SPLIT_COL = 'USO_ML' --realice el split por una columna especifica
+  DATA_SPLIT_COL = 'IS_TEST' --realice el split por una columna especifica
 ) AS
 
 

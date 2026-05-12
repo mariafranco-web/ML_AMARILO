@@ -33,6 +33,6 @@ stratified AS (
 SELECT 
   * EXCEPT(random_val, fold),
 
-  IF(fold = 1, TRUE, FALSE) AS USO_ML
+  IF(fold = 1, TRUE, FALSE) AS IS_TEST
 
 FROM stratified
