@@ -23,7 +23,7 @@ stratified AS (
   SELECT 
     *,
     NTILE(5) OVER(
-      PARTITION BY FECHA_ULTIMA_COTIZACION 
+      PARTITION BY COMPRO 
       ORDER BY random_val
     ) AS fold
   FROM base_data
