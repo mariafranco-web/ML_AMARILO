@@ -17,7 +17,7 @@ OPTIONS(
 ) AS
 
 
-SELECT * 
+SELECT * EXCEPT(IDENTIFICACION_COMPRADOR1)
 FROM  ${ref("03_Obt_Cotizaciones_split")}
 
 
