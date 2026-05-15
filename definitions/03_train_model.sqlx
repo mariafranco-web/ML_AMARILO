@@ -1,10 +1,14 @@
 config {
   type: "operations",
-  hasOutput: true, 
-  name: "04_logreg_model_cotizaciones_v7" 
+  hasOutput: true
+										  
 }
 
-CREATE OR REPLACE MODEL ${self()}
+---------------------------------------------------
+-- MODELO LOGISTICO
+---------------------------------------------------
+
+CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.04_logreg_model_cotizaciones_v8`
 
 OPTIONS(
   MODEL_TYPE = 'LOGISTIC_REG',
@@ -18,7 +22,30 @@ OPTIONS(
 
 
 SELECT * EXCEPT(IDENTIFICACION_COMPRADOR1)
-FROM  ${ref("03_Obt_Cotizaciones_split")}
+FROM ${ref("03_Obt_Cotizaciones_split")};
+
+---------------------------------------------------
+-- MODELO BOOSTED TREE
+---------------------------------------------------
+
+CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.04_boosted_tree_model_cotizaciones_v8`
+
+OPTIONS(
+  MODEL_TYPE = 'BOOSTED_TREE_CLASSIFIER',
+  INPUT_LABEL_COLS = ['COMPRO'],
+  AUTO_CLASS_WEIGHTS = TRUE,
+  ENABLE_GLOBAL_EXPLAIN = TRUE,
+  DATA_SPLIT_METHOD = 'CUSTOM',
+  DATA_SPLIT_COL = 'IS_TEST',
+
+  -- hiperparámetros recomendados iniciales
+  MAX_ITERATIONS = 50,
+  MAX_TREE_DEPTH = 6,
+  SUBSAMPLE = 0.8
+) AS
+
+SELECT * EXCEPT(IDENTIFICACION_COMPRADOR1)
+FROM ${ref("03_Obt_Cotizaciones_split")};
 
 
 
