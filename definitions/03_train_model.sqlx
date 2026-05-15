@@ -33,15 +33,15 @@ CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIO
 OPTIONS(
   MODEL_TYPE = 'BOOSTED_TREE_CLASSIFIER',
   INPUT_LABEL_COLS = ['COMPRO'],
-  AUTO_CLASS_WEIGHTS = TRUE,
-  ENABLE_GLOBAL_EXPLAIN = TRUE,
-  DATA_SPLIT_METHOD = 'CUSTOM',
-  DATA_SPLIT_COL = 'IS_TEST',
+  AUTO_CLASS_WEIGHTS = TRUE, --balanceo automatico evita sesgo hacia la clase mayoritaria
+  ENABLE_GLOBAL_EXPLAIN = TRUE, --identifica que variables influyen mas
+  DATA_SPLIT_METHOD = 'CUSTOM',  --no requiere split automatico
+  DATA_SPLIT_COL = 'IS_TEST', --realice el split por una columna especifica
 
   -- hiperparámetros recomendados iniciales
-  MAX_ITERATIONS = 50,
-  MAX_TREE_DEPTH = 6,
-  SUBSAMPLE = 0.8
+  MAX_ITERATIONS = 50, --cantidad maxima de arboles que construira 
+  MAX_TREE_DEPTH = 6, --profundidad de aprendizaje de cada arbol (2- reglas simples; 10 reglas muy complejas)
+  SUBSAMPLE = 0.8 --cada arbol se entrena con el 80% de los datos
 ) AS
 
 SELECT * EXCEPT(IDENTIFICACION_COMPRADOR1)
