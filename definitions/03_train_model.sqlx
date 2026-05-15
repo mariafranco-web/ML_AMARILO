@@ -44,9 +44,10 @@ OPTIONS(
   SUBSAMPLE = 0.8 --cada arbol se entrena con el 80% de los datos
 ) AS
 
-SELECT * EXCEPT(IDENTIFICACION_COMPRADOR1)
-FROM ${ref("03_Obt_Cotizaciones_split")};
-
+SELECT
+    * EXCEPT(IDENTIFICACION_COMPRADOR1, FECHA_ULTIMA_COTIZACION),
+    DATE(FECHA_ULTIMA_COTIZACION) AS FECHA_ULTIMA_COTIZACION
+FROM ${ref("03_Obt_Cotizaciones_split")}
 
 
 
