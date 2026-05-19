@@ -17,12 +17,7 @@ FROM ML.PREDICT(
     (
 
         SELECT
-            * EXCEPT(
-              COMPRADOR1,
-              DIRECTOR_DE_VENTAS_VIVIENDAS_SUBETAPA,
-              COORDINADOR_ENCARGADO
-            )
-
+            * 
         FROM ${ref("04_Obt_Cotizaciones_incremental")}
 
         ${when(incremental(),
