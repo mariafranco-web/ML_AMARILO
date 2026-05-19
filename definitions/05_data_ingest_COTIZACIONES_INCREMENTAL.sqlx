@@ -1,0 +1,8 @@
+
+config {
+    type: "declaration",
+    database: "amrl-data-prd",
+    schema: "WKS_COTIZACIONES_ML",
+    name: "04_Obt_Cotizaciones_incremental",
+    description: "Data con las cotizaciones del ultimo mes"
+}

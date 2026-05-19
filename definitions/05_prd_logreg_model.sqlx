@@ -1,0 +1,39 @@
+config {
+  type: "incremental",
+  schema: "WKS_COTIZACIONES_ML",
+  name: "05_logreg_model_cotizaciones_predicted",
+  uniqueKey: ["BK_NUMERO_OP"]
+}
+
+SELECT
+
+    CURRENT_TIMESTAMP() AS FECHA_SCORING,
+    P.*
+
+FROM ML.PREDICT(
+
+    MODEL `amrl-data-prd.WKS_COTIZACIONES_ML.05_logreg_model_cotizaciones_v8`,
+
+    (
+
+        SELECT
+            * EXCEPT(
+              COMPRADOR1,
+              DIRECTOR_DE_VENTAS_VIVIENDAS_SUBETAPA,
+              COORDINADOR_ENCARGADO
+            )
+
+        FROM ${ref("04_Obt_Cotizaciones_incremental")}
+
+        ${when(incremental(),
+        `
+            WHERE BK_NUMERO_OP NOT IN (
+                SELECT BK_NUMERO_OP
+                FROM ${self()}
+            )
+        `
+        )}
+
+    )
+
+) AS P
