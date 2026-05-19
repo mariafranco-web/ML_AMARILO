@@ -1,7 +1,7 @@
 config {
   type: "incremental",
   schema: "WKS_COTIZACIONES_ML",
-  name: "05_logreg_model_cotizaciones_predicted",
+  name: "05_prd_logreg_model",
   uniqueKey: ["BK_NUMERO_OP"]
 }
 
