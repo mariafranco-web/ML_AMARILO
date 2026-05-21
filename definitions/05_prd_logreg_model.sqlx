@@ -21,7 +21,7 @@ FROM ML.PREDICT(
     (
 
         SELECT
-            *
+            *  EXCEPT(COMPRO)
 
         FROM ${ref("04_Obt_Cotizaciones_incremental")}
 
