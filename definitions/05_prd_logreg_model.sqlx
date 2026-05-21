@@ -2,7 +2,11 @@ config {
   type: "incremental",
   schema: "WKS_COTIZACIONES_ML",
   name: "05_prd_logreg_model",
-  uniqueKey: ["BK_NUMERO_OP"]
+  uniqueKey: [
+    "BK_NUMERO_OP",
+    "IDENTIFICACION_COMPRADOR1",
+    "MACROCONSOLIDADOR"
+  ]
 }
 
 SELECT
@@ -17,13 +21,23 @@ FROM ML.PREDICT(
     (
 
         SELECT
-            * 
+            *
+
         FROM ${ref("04_Obt_Cotizaciones_incremental")}
 
         ${when(incremental(),
-        `
-            WHERE BK_NUMERO_OP NOT IN (
-                SELECT BK_NUMERO_OP
+            `WHERE CONCAT(
+                    CAST(BK_NUMERO_OP AS STRING),
+                    IDENTIFICACION_COMPRADOR1,
+                    MACROCONSOLIDADOR
+                  ) NOT IN (
+
+                SELECT CONCAT(
+                           CAST(BK_NUMERO_OP AS STRING),
+                           IDENTIFICACION_COMPRADOR1,
+                           MACROCONSOLIDADOR
+                       )
+
                 FROM ${self()}
             )
         `
