@@ -3,7 +3,7 @@ config {
   schema: "WKS_COTIZACIONES_ML",
   name: "05_prd_boosted_tree_model",
 
-  uniqueKey: ["ID_COTIZACIONES"]
+  uniqueKey: ["ID_COTIZACION"]
 }
 
 SELECT
