@@ -2,11 +2,8 @@ config {
   type: "incremental",
   schema: "WKS_COTIZACIONES_ML",
   name: "05_prd_boosted_tree_model",
-  uniqueKey: [
-    "BK_NUMERO_OP",
-    "IDENTIFICACION_COMPRADOR1",
-    "MACROCONSOLIDADOR"
-  ]
+
+  uniqueKey: ["ID_COTIZACIONES"]
 }
 
 SELECT
@@ -17,32 +14,12 @@ SELECT
 FROM ML.PREDICT(
 
     MODEL `amrl-data-prd.WKS_COTIZACIONES_ML.05_boosted_tree_model_cotizaciones_v8`,
-
     (
-
         SELECT
-            *  EXCEPT(COMPRO)
 
+            * EXCEPT(COMPRO)
         FROM ${ref("04_Obt_Cotizaciones_incremental")}
-
-        ${when(incremental(),
-            `WHERE CONCAT(
-                    CAST(BK_NUMERO_OP AS STRING),
-                    IDENTIFICACION_COMPRADOR1,
-                    MACROCONSOLIDADOR
-                  ) NOT IN (
-
-                SELECT CONCAT(
-                           CAST(BK_NUMERO_OP AS STRING),
-                           IDENTIFICACION_COMPRADOR1,
-                           MACROCONSOLIDADOR
-                       )
-
-                FROM ${self()}
-            )
-        `
-        )}
-
+        WHERE DATE(FECHA_ACTUALIZACION_ML) < '2026-05-20'--DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)''
     )
 
 ) AS P
