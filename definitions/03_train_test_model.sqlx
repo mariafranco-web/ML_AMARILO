@@ -8,7 +8,7 @@ config {
 -- MODELO LOGISTICO
 ---------------------------------------------------
 
-CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.08_logreg_model_cotizaciones_v10`
+CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.06_logreg_model_cotizaciones_v8`
 
 OPTIONS(
   MODEL_TYPE = 'LOGISTIC_REG',
@@ -53,7 +53,7 @@ FROM ${ref("03_Obt_Cotizaciones_split")};
 -- MODELO BOOSTED TREE
 ---------------------------------------------------
 
-CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.08_boosted_tree_model_cotizaciones_v10`
+CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.06_boosted_tree_model_cotizaciones_v8`
 
 OPTIONS(
   MODEL_TYPE = 'BOOSTED_TREE_CLASSIFIER',
