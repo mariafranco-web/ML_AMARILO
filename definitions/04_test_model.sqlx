@@ -8,7 +8,7 @@ config {
 -- MODELO LOGISTICO
 ---------------------------------------------------
 
-CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.05_logreg_model_cotizaciones_v8`
+CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.06_logreg_model_cotizaciones_v9`
 
 OPTIONS(
   MODEL_TYPE = 'LOGISTIC_REG',
@@ -28,7 +28,7 @@ FROM ${ref("03_Obt_Cotizaciones_split")};
 -- MODELO BOOSTED TREE
 ---------------------------------------------------
 
-CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.05_boosted_tree_model_cotizaciones_v8`
+CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.06_boosted_tree_model_cotizaciones_v9`
 
 OPTIONS(
   MODEL_TYPE = 'BOOSTED_TREE_CLASSIFIER',
@@ -45,7 +45,16 @@ OPTIONS(
 ) AS
 
 SELECT
-    * EXCEPT(IDENTIFICACION_COMPRADOR1, FECHA_ULTIMA_COTIZACION)
+    * EXCEPT(IDENTIFICACION_COMPRADOR1, 
+             FECHA_ULTIMA_COTIZACION,
+             COBERTURA_REAL_CUOTA_INICIAL_AHORRO,
+             VALOR_CREDITO_ESTIMADO,
+             PORCENTAJE_COBERTURA_CUOTA_INICIAL,
+             PORCENTAJE_COBERTURA_CREDITO,
+             PORCENTAJE_COBERTURA_TOTAL,
+             EDAD,
+             VALOR_DE_SEPARACION_PACTADO_PROYECTO
+)
 FROM ${ref("03_Obt_Cotizaciones_split")}
 
 
