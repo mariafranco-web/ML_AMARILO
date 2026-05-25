@@ -5,34 +5,20 @@ config {
   name: "03_Obt_Cotizaciones_split"
 }
 
+/* garantiza que un cliente queda o en test o en train pero no en los dos*/
 
-/*TRUE → datos de prueba (test)
-  FALSE → datos de entrenamiento (train)*/
-
-WITH base_data AS (
-
-  SELECT 
+SELECT
     *,
-    RAND() AS random_val
-  FROM ${ref("02_Obt_Cotizaciones")}
 
-),
+    CASE
+        WHEN MOD(
+                ABS(FARM_FINGERPRINT(
+                    COALESCE(CAST(IDENTIFICACION_COMPRADOR1 AS STRING),'SIN_ID')
+                )),
+                5
+             ) = 0
+        THEN TRUE
+        ELSE FALSE
+    END AS IS_TEST
 
-stratified AS (
-
-  SELECT 
-    *,
-    NTILE(5) OVER(
-      PARTITION BY COMPRO 
-      ORDER BY random_val
-    ) AS fold
-  FROM base_data
-
-)
-
-SELECT 
-  * EXCEPT(random_val, fold),
-
-  IF(fold = 1, TRUE, FALSE) AS IS_TEST
-
-FROM stratified
+FROM ${ref("02_Obt_Cotizaciones")}
