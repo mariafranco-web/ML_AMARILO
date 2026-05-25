@@ -8,7 +8,7 @@ config {
 -- MODELO LOGISTICO
 ---------------------------------------------------
 
-CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.06_logreg_model_cotizaciones_v9`
+CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.08_logreg_model_cotizaciones_v10`
 
 OPTIONS(
   MODEL_TYPE = 'LOGISTIC_REG',
@@ -21,14 +21,39 @@ OPTIONS(
 ) AS
 
 
-SELECT * EXCEPT(IDENTIFICACION_COMPRADOR1)
+SELECT * EXCEPT(ID_COTIZACION,
+                HASH_CONTROL,
+                IDENTIFICACION_COMPRADOR1,
+                COMPRADOR1, 
+                DIRECTOR_DE_VENTAS_VIVIENDAS_SUBETAPA, 
+                COORDINADOR_ENCARGADO, 
+                VALOR_DE_SEPARACION_PACTADO_PROYECTO, 
+                BK_NUMERO_OP, 
+                EDAD, 
+                INGRESO_MENSUAL, 
+                EGRESOS_MENSUALES, 
+                VALOR_CREDITOS_REPORTADOS_ORACLE,
+                NUM_CREDITOS_REPORTADOS_ORACLE,
+                VALOR_SUBSIDIOS_REPORTADOS_ORACLE,
+                NUM_SUBSIDIOS_REPORTADOS_ORACLE,
+                TIPO_VENTA,
+                COBERTURA_REAL_CUOTA_INICIAL_AHORRO,
+                PORCENTAJE_COBERTURA_CUOTA_INICIAL,
+                PORCENTAJE_COBERTURA_CREDITO,
+                PORCENTAJE_COBERTURA_SUBSIDIOS,
+                PORCENTAJE_COBERTURA_TOTAL,
+                FECHA_ULTIMA_COMPRA,
+                NUM_COMPRAS_ANTERIORES,
+                NUM_DESISTIDOS,
+                NUM_COTIZACIONES_X_COMPRADOR,
+                NUM_PROYECTOS_DE_INTERES)
 FROM ${ref("03_Obt_Cotizaciones_split")};
 
 ---------------------------------------------------
 -- MODELO BOOSTED TREE
 ---------------------------------------------------
 
-CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.06_boosted_tree_model_cotizaciones_v9`
+CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.08_boosted_tree_model_cotizaciones_v10`
 
 OPTIONS(
   MODEL_TYPE = 'BOOSTED_TREE_CLASSIFIER',
@@ -45,15 +70,32 @@ OPTIONS(
 ) AS
 
 SELECT
-    * EXCEPT(IDENTIFICACION_COMPRADOR1, 
-             FECHA_ULTIMA_COTIZACION,
-             COBERTURA_REAL_CUOTA_INICIAL_AHORRO,
-             VALOR_CREDITO_ESTIMADO,
-             PORCENTAJE_COBERTURA_CUOTA_INICIAL,
-             PORCENTAJE_COBERTURA_CREDITO,
-             PORCENTAJE_COBERTURA_TOTAL,
-             EDAD,
-             VALOR_DE_SEPARACION_PACTADO_PROYECTO)
+    * EXCEPT(ID_COTIZACION,
+                HASH_CONTROL,
+                IDENTIFICACION_COMPRADOR1,
+                COMPRADOR1, 
+                DIRECTOR_DE_VENTAS_VIVIENDAS_SUBETAPA, 
+                COORDINADOR_ENCARGADO, 
+                VALOR_DE_SEPARACION_PACTADO_PROYECTO, 
+                BK_NUMERO_OP, 
+                EDAD, 
+                INGRESO_MENSUAL, 
+                EGRESOS_MENSUALES, 
+                VALOR_CREDITOS_REPORTADOS_ORACLE,
+                NUM_CREDITOS_REPORTADOS_ORACLE,
+                VALOR_SUBSIDIOS_REPORTADOS_ORACLE,
+                NUM_SUBSIDIOS_REPORTADOS_ORACLE,
+                TIPO_VENTA,
+                COBERTURA_REAL_CUOTA_INICIAL_AHORRO,
+                PORCENTAJE_COBERTURA_CUOTA_INICIAL,
+                PORCENTAJE_COBERTURA_CREDITO,
+                PORCENTAJE_COBERTURA_SUBSIDIOS,
+                PORCENTAJE_COBERTURA_TOTAL,
+                FECHA_ULTIMA_COMPRA,
+                NUM_COMPRAS_ANTERIORES,
+                NUM_DESISTIDOS,
+                NUM_COTIZACIONES_X_COMPRADOR,
+                NUM_PROYECTOS_DE_INTERES)
 FROM ${ref("03_Obt_Cotizaciones_split")}
 
 
