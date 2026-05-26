@@ -31,6 +31,7 @@ SELECT * EXCEPT(ID_COTIZACION,
                 BK_NUMERO_OP, 
                 INGRESO_MENSUAL, 
                 EGRESOS_MENSUALES,  
+                INGRESO_MENSUAL_NETO
                 VALOR_CREDITOS_REPORTADOS_ORACLE,
                 NUM_CREDITOS_REPORTADOS_ORACLE,
                 VALOR_SUBSIDIOS_REPORTADOS_ORACLE,
@@ -81,6 +82,7 @@ SELECT
                 BK_NUMERO_OP, 
                 INGRESO_MENSUAL, 
                 EGRESOS_MENSUALES,  
+                INGRESO_MENSUAL_NETO
                 VALOR_CREDITOS_REPORTADOS_ORACLE,
                 NUM_CREDITOS_REPORTADOS_ORACLE,
                 VALOR_SUBSIDIOS_REPORTADOS_ORACLE,
