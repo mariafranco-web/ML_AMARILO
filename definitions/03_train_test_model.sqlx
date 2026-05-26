@@ -41,12 +41,10 @@ SELECT * EXCEPT(ID_COTIZACION,
                 PORCENTAJE_COBERTURA_CREDITO,
                 PORCENTAJE_COBERTURA_SUBSIDIOS,
                 PORCENTAJE_COBERTURA_TOTAL,
-                FECHA_ULTIMA_COMPRA,
-                NUM_COMPRAS_ANTERIORES,
+                FECHA_ULTIMA_COMPRA,           
                 NUM_DESISTIDOS,
                 NUM_COTIZACIONES_X_COMPRADOR,
-                NUM_PROYECTOS_DE_INTERES
-
+                NUM_PROYECTOS_DE_INTERES,
                 EDAD, 
                 NUM_COMPRAS_ANTERIORES, 
                 CIUDAD_PROYECTO_DE_INTERES)
@@ -93,12 +91,10 @@ SELECT
                 PORCENTAJE_COBERTURA_CREDITO,
                 PORCENTAJE_COBERTURA_SUBSIDIOS,
                 PORCENTAJE_COBERTURA_TOTAL,
-                FECHA_ULTIMA_COMPRA,
-                NUM_COMPRAS_ANTERIORES,
+                FECHA_ULTIMA_COMPRA,              
                 NUM_DESISTIDOS,
                 NUM_COTIZACIONES_X_COMPRADOR,
-                NUM_PROYECTOS_DE_INTERES
-
+                NUM_PROYECTOS_DE_INTERES,
                 EDAD, 
                 NUM_COMPRAS_ANTERIORES, 
                 CIUDAD_PROYECTO_DE_INTERES)
