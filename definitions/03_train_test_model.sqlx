@@ -21,7 +21,35 @@ OPTIONS(
 ) AS
 
 
-SELECT * EXCEPT(EDAD, NUM_COMPRAS_ANTERIORES, CIUDAD_PROYECTO_DE_INTERES)
+SELECT * EXCEPT(ID_COTIZACION,
+                HASH_CONTROL,
+                IDENTIFICACION_COMPRADOR1,
+                COMPRADOR1, 
+                DIRECTOR_DE_VENTAS_VIVIENDAS_SUBETAPA, 
+                COORDINADOR_ENCARGADO,
+                VALOR_DE_SEPARACION_PACTADO_PROYECTO, 
+                BK_NUMERO_OP, 
+                INGRESO_MENSUAL, 
+                EGRESOS_MENSUALES,  
+                VALOR_CREDITOS_REPORTADOS_ORACLE,
+                NUM_CREDITOS_REPORTADOS_ORACLE,
+                VALOR_SUBSIDIOS_REPORTADOS_ORACLE,
+                NUM_SUBSIDIOS_REPORTADOS_ORACLE,
+                TIPO_VENTA,
+                COBERTURA_REAL_CUOTA_INICIAL_AHORRO,
+                PORCENTAJE_COBERTURA_CUOTA_INICIAL,
+                PORCENTAJE_COBERTURA_CREDITO,
+                PORCENTAJE_COBERTURA_SUBSIDIOS,
+                PORCENTAJE_COBERTURA_TOTAL,
+                FECHA_ULTIMA_COMPRA,
+                NUM_COMPRAS_ANTERIORES,
+                NUM_DESISTIDOS,
+                NUM_COTIZACIONES_X_COMPRADOR,
+                NUM_PROYECTOS_DE_INTERES
+
+                EDAD, 
+                NUM_COMPRAS_ANTERIORES, 
+                CIUDAD_PROYECTO_DE_INTERES)
 FROM ${ref("03_Obt_Cotizaciones_split")};
 
 ---------------------------------------------------
@@ -45,7 +73,35 @@ OPTIONS(
 ) AS
 
 SELECT
-    * EXCEPT(EDAD, NUM_COMPRAS_ANTERIORES, CIUDAD_PROYECTO_DE_INTERES)
+    * EXCEPT(ID_COTIZACION,
+                HASH_CONTROL,
+                IDENTIFICACION_COMPRADOR1,
+                COMPRADOR1, 
+                DIRECTOR_DE_VENTAS_VIVIENDAS_SUBETAPA, 
+                COORDINADOR_ENCARGADO,
+                VALOR_DE_SEPARACION_PACTADO_PROYECTO, 
+                BK_NUMERO_OP, 
+                INGRESO_MENSUAL, 
+                EGRESOS_MENSUALES,  
+                VALOR_CREDITOS_REPORTADOS_ORACLE,
+                NUM_CREDITOS_REPORTADOS_ORACLE,
+                VALOR_SUBSIDIOS_REPORTADOS_ORACLE,
+                NUM_SUBSIDIOS_REPORTADOS_ORACLE,
+                TIPO_VENTA,
+                COBERTURA_REAL_CUOTA_INICIAL_AHORRO,
+                PORCENTAJE_COBERTURA_CUOTA_INICIAL,
+                PORCENTAJE_COBERTURA_CREDITO,
+                PORCENTAJE_COBERTURA_SUBSIDIOS,
+                PORCENTAJE_COBERTURA_TOTAL,
+                FECHA_ULTIMA_COMPRA,
+                NUM_COMPRAS_ANTERIORES,
+                NUM_DESISTIDOS,
+                NUM_COTIZACIONES_X_COMPRADOR,
+                NUM_PROYECTOS_DE_INTERES
+
+                EDAD, 
+                NUM_COMPRAS_ANTERIORES, 
+                CIUDAD_PROYECTO_DE_INTERES)
 FROM ${ref("03_Obt_Cotizaciones_split")}
 
 
