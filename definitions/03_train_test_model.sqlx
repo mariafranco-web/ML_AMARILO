@@ -7,7 +7,7 @@ config {
 ---------------------------------------------------
 -- MODELO LOGISTICO
 ---------------------------------------------------
-
+/*
 CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.08_logreg_model_cotizaciones`
 
 OPTIONS(
@@ -61,12 +61,12 @@ SELECT * EXCEPT(ID_COTIZACION,
               PORCENTAJE_INTERES_MAYOR_A_VIS,
               PORCENTAJE_INTERES_EMPRESARIAL)
 FROM ${ref("03_Obt_Cotizaciones_split")};
-
+*/
 ---------------------------------------------------
 -- MODELO BOOSTED TREE
 ---------------------------------------------------
 
-CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.08_boosted_tree_model_cotizaciones`
+CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.09_boosted_tree_model_cotizaciones`
 
 OPTIONS(
   MODEL_TYPE = 'BOOSTED_TREE_CLASSIFIER',
@@ -121,7 +121,8 @@ SELECT
               PORCENTAJE_INTERES_VIP,
               PORCENTAJE_INTERES_VIS,
               PORCENTAJE_INTERES_MAYOR_A_VIS,
-              PORCENTAJE_INTERES_EMPRESARIAL)
+              PORCENTAJE_INTERES_EMPRESARIAL,
+              EDAD)
 FROM ${ref("03_Obt_Cotizaciones_split")}
 
 
