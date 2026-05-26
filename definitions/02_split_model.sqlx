@@ -5,19 +5,18 @@ config {
   name: "03_Obt_Cotizaciones_split"
 }
 
-/* garantiza que un cliente queda o en test o en train pero no en los dos*/
+/*
+TRUE  -> TEST  (2025-2026)
+FALSE -> TRAIN (2021-2024)
+*/
 
 SELECT
     *,
 
     CASE
-        WHEN MOD(
-                ABS(FARM_FINGERPRINT(
-                    COALESCE(CAST(IDENTIFICACION_COMPRADOR1 AS STRING),'SIN_ID')
-                )),
-                5
-             ) = 0
+        WHEN ANIO_COTIZACION IN (2025, 2026)
         THEN TRUE
+
         ELSE FALSE
     END AS IS_TEST
 
