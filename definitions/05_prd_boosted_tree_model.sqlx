@@ -2,9 +2,10 @@ config {
   type: "incremental",
   schema: "WKS_COTIZACIONES_ML",
   name: "05_prd_boosted_tree_model",
-
-  uniqueKey: ["ID_COTIZACION"]
+  
 }
+
+--uniqueKey: ["ID_COTIZACION"]
 
 SELECT
    --TIMESTAMP('2026-05-26 00:00:00') AS FECHA_SCORING , --CARGAS INCREMENTALES MANUALES
