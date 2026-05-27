@@ -13,7 +13,7 @@ SELECT
 
 FROM ML.PREDICT(
 
-    MODEL `amrl-data-prd.WKS_COTIZACIONES_ML.05_boosted_tree_model_cotizaciones_v8`,
+    MODEL `amrl-data-prd.WKS_COTIZACIONES_ML.10_boosted_tree_model_cotizaciones`,
     (
         SELECT
 
