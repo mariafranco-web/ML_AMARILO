@@ -5,7 +5,7 @@ config {
 ---------------------------------------------------
 -- MODELO BOOSTED TREE
 ---------------------------------------------------
-CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.09_boosted_tree_model_cotizaciones`
+CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.10_boosted_tree_model_cotizaciones`
 OPTIONS(
   MODEL_TYPE = 'BOOSTED_TREE_CLASSIFIER',
   INPUT_LABEL_COLS = ['COMPRO'],
