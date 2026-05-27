@@ -1,0 +1,41 @@
+config {
+    type: "incremental",
+    tags: ["MONITORING"],
+    name: "05_monitoring_metricas_modelo",
+    description: "Tabla histórica para monitorear las métricas del modelo en el tiempo."
+}
+
+SELECT 
+
+    CURRENT_TIMESTAMP() AS FECHA_SCORING,
+    0.5 AS THRESHOLD_PREDICCION,
+    *
+
+FROM ML.EVALUATE(
+
+    MODEL `amrl-data-prd.WKS_COTIZACIONES_ML.10_boosted_tree_model_cotizaciones`,
+
+    (
+
+        SELECT
+            * EXCEPT(
+                ID_COTIZACION,
+                HASH_CONTROL,
+                IDENTIFICACION_COMPRADOR1,
+                COMPRADOR1,
+                BK_NUMERO_OP,
+                EDAD,
+                NUM_COMPRAS_ANTERIORES,
+                CIUDAD_PROYECTO_DE_INTERES,
+                FECHA_ULTIMA_COTIZACION
+            )
+
+        FROM ${ref("04_Obt_Cotizaciones_incremental")}
+
+    ),
+
+    STRUCT(
+        0.5 AS threshold
+    )
+
+)
