@@ -1,100 +1,54 @@
 config {
   type: "operations",
   hasOutput: true
-										  
 }
-
----------------------------------------------------
--- MODELO LOGISTICO
----------------------------------------------------
-/*
-CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.08_logreg_model_cotizaciones`
-
-OPTIONS(
-  MODEL_TYPE = 'LOGISTIC_REG',
-  INPUT_LABEL_COLS = ['COMPRO'],
-  CATEGORY_ENCODING_METHOD = 'ONE_HOT_ENCODING', --Convierte categorías en columnas binarias.
-  AUTO_CLASS_WEIGHTS = TRUE, --balanceo automatico evita sesgo hacia la clase mayoritaria
-  ENABLE_GLOBAL_EXPLAIN = TRUE, --identifica que variables influyen mas
-  DATA_SPLIT_METHOD = 'CUSTOM', --no requiere split automatico
-  DATA_SPLIT_COL = 'IS_TEST' --realice el split por una columna especifica
-) AS
-
-
-SELECT * EXCEPT(ID_COTIZACION,
-              HASH_CONTROL,
-              IDENTIFICACION_COMPRADOR1,
-              CLASIFICACION_POR_TIPO_DE_IDENTIFICACION,
-              COMPRADOR1,
-              DIRECTOR_DE_VENTAS_VIVIENDAS_SUBETAPA,
-              COORDINADOR_ENCARGADO,
-              VALOR_DE_SEPARACION_PACTADO_PROYECTO,
-              BK_NUMERO_OP,
-              INGRESO_MENSUAL,
-              EGRESOS_MENSUALES,
-              INGRESO_MENSUAL_NETO,
-              CAPACIDAD_PAGO_MENSUAL,
-              VALOR_CREDITOS_REPORTADOS_ORACLE,
-              NUM_CREDITOS_REPORTADOS_ORACLE,
-              VALOR_SUBSIDIOS_REPORTADOS_ORACLE,
-              NUM_SUBSIDIOS_REPORTADOS_ORACLE,
-              VALOR_CUOTA_INICIAL,
-              COBERTURA_REAL_CUOTA_INICIAL_AHORRO,
-              VALOR_CREDITO_ESTIMADO, 
-              VALOR_SUBSIDIO_ESTIMADO,
-              PORCENTAJE_COBERTURA_CUOTA_INICIAL, 
-              PORCENTAJE_COBERTURA_CREDITO,
-              PORCENTAJE_COBERTURA_SUBSIDIOS,
-              PORCENTAJE_COBERTURA_TOTAL,
-              CLASIFICACION_POR_COBERTURA, 
-              FECHA_ULTIMA_COTIZACION,
-              FECHA_ULTIMA_COMPRA,
-              NUM_COMPRAS_ANTERIORES,
-              NUM_DESISTIDOS,
-              NUM_COTIZACIONES_X_COMPRADOR,
-              NUM_PROYECTOS_DE_INTERES,
-              NUM_CIUDADES_DE_INTERES,
-              NUM_ASESORES_QUE_ATENDIERON,
-              PROMEDIO_ANIOS_ANTIGUEDAD_ASESORES,
-              PORCENTAJE_INTERES_VIP,
-              PORCENTAJE_INTERES_VIS,
-              PORCENTAJE_INTERES_MAYOR_A_VIS,
-              PORCENTAJE_INTERES_EMPRESARIAL)
-FROM ${ref("03_Obt_Cotizaciones_split")};
-*/
 ---------------------------------------------------
 -- MODELO BOOSTED TREE
 ---------------------------------------------------
-
 CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.09_boosted_tree_model_cotizaciones`
-
 OPTIONS(
   MODEL_TYPE = 'BOOSTED_TREE_CLASSIFIER',
   INPUT_LABEL_COLS = ['COMPRO'],
-  AUTO_CLASS_WEIGHTS = TRUE, --balanceo automatico evita sesgo hacia la clase mayoritaria
-  ENABLE_GLOBAL_EXPLAIN = TRUE, --identifica que variables influyen mas
-  DATA_SPLIT_METHOD = 'CUSTOM',  --no requiere split automatico
-  DATA_SPLIT_COL = 'IS_TEST', --realice el split por una columna especifica
-
-  -- hiperparámetros recomendados iniciales
-  MAX_ITERATIONS = 300,  --50, --cantidad maxima de arboles que construira 
-  MAX_TREE_DEPTH = 6, --profundidad de aprendizaje de cada arbol (2- reglas simples; 10 reglas muy complejas)
-  SUBSAMPLE = 0.8 --cada arbol se entrena con el 80% de los datos
+  ---------------------------------------------------
+  -- SPLIT
+  ---------------------------------------------------
+  DATA_SPLIT_METHOD = 'CUSTOM',
+  DATA_SPLIT_COL = 'IS_TEST',
+  ---------------------------------------------------
+  -- BALANCEO
+  ---------------------------------------------------
+  AUTO_CLASS_WEIGHTS = TRUE,
+  ---------------------------------------------------
+  -- EXPLAINABILITY
+  ---------------------------------------------------
+  ENABLE_GLOBAL_EXPLAIN = TRUE,
+  ---------------------------------------------------
+  -- HIPERPARÁMETROS
+  ---------------------------------------------------
+  MAX_ITERATIONS = 300,
+  MAX_TREE_DEPTH = 6,
+  SUBSAMPLE = 0.8,
+  LEARN_RATE = 0.05,
+  COLSAMPLE_BYTREE = 0.8,
+  MIN_TREE_CHILD_WEIGHT = 5,
+  MIN_SPLIT_LOSS = 1,
+  L1_REG = 0.1,
+  L2_REG = 1.0,
+  EARLY_STOP = TRUE
 ) AS
 
 SELECT
-    * EXCEPT(ID_COTIZACION,
-              HASH_CONTROL,
-              IDENTIFICACION_COMPRADOR1,
-              BK_NUMERO_OP,
-              IS_TEST
-              )
+    * EXCEPT(
+        ID_COTIZACION,
+        HASH_CONTROL,
+        IDENTIFICACION_COMPRADOR1,
+        COMPRADOR1
+        BK_NUMERO_OP,
+        EDAD,
+        NUM_COMPRAS_ANTERIORES,
+        CIUDAD_PROYECTO_DE_INTERES,
+        FECHA_ULTIMA_COTIZACION
+
+    )
+
 FROM ${ref("03_Obt_Cotizaciones_split")}
-
-
-
-
-
-
-
-
