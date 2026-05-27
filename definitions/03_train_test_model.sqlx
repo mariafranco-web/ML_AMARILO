@@ -77,7 +77,7 @@ OPTIONS(
   DATA_SPLIT_COL = 'IS_TEST', --realice el split por una columna especifica
 
   -- hiperparámetros recomendados iniciales
-  MAX_ITERATIONS = 50, --cantidad maxima de arboles que construira 
+  MAX_ITERATIONS = 300,  --50, --cantidad maxima de arboles que construira 
   MAX_TREE_DEPTH = 6, --profundidad de aprendizaje de cada arbol (2- reglas simples; 10 reglas muy complejas)
   SUBSAMPLE = 0.8 --cada arbol se entrena con el 80% de los datos
 ) AS
@@ -86,43 +86,9 @@ SELECT
     * EXCEPT(ID_COTIZACION,
               HASH_CONTROL,
               IDENTIFICACION_COMPRADOR1,
-              CLASIFICACION_POR_TIPO_DE_IDENTIFICACION,
-              COMPRADOR1,
-              DIRECTOR_DE_VENTAS_VIVIENDAS_SUBETAPA,
-              COORDINADOR_ENCARGADO,
-              VALOR_DE_SEPARACION_PACTADO_PROYECTO,
               BK_NUMERO_OP,
-              INGRESO_MENSUAL,
-              EGRESOS_MENSUALES,
-              INGRESO_MENSUAL_NETO,
-              CAPACIDAD_PAGO_MENSUAL,
-              VALOR_CREDITOS_REPORTADOS_ORACLE,
-              NUM_CREDITOS_REPORTADOS_ORACLE,
-              VALOR_SUBSIDIOS_REPORTADOS_ORACLE,
-              NUM_SUBSIDIOS_REPORTADOS_ORACLE,
-              VALOR_CUOTA_INICIAL,
-              COBERTURA_REAL_CUOTA_INICIAL_AHORRO,
-              VALOR_CREDITO_ESTIMADO, 
-              VALOR_SUBSIDIO_ESTIMADO,
-              PORCENTAJE_COBERTURA_CUOTA_INICIAL, 
-              PORCENTAJE_COBERTURA_CREDITO,
-              PORCENTAJE_COBERTURA_SUBSIDIOS,
-              PORCENTAJE_COBERTURA_TOTAL,
-              CLASIFICACION_POR_COBERTURA, 
-              FECHA_ULTIMA_COTIZACION,
-              FECHA_ULTIMA_COMPRA,
-              NUM_COMPRAS_ANTERIORES,
-              NUM_DESISTIDOS,
-              NUM_COTIZACIONES_X_COMPRADOR,
-              NUM_PROYECTOS_DE_INTERES,
-              NUM_CIUDADES_DE_INTERES,
-              NUM_ASESORES_QUE_ATENDIERON,
-              PROMEDIO_ANIOS_ANTIGUEDAD_ASESORES,
-              PORCENTAJE_INTERES_VIP,
-              PORCENTAJE_INTERES_VIS,
-              PORCENTAJE_INTERES_MAYOR_A_VIS,
-              PORCENTAJE_INTERES_EMPRESARIAL,
-              EDAD)
+              IS_TEST
+              )
 FROM ${ref("03_Obt_Cotizaciones_split")}
 
 
