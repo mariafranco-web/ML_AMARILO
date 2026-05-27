@@ -17,7 +17,15 @@ FROM ML.PREDICT(
     (
         SELECT
 
-            * EXCEPT(COMPRO)
+            * EXCEPT(ID_COTIZACION,
+                        HASH_CONTROL,
+                        IDENTIFICACION_COMPRADOR1,
+                        COMPRADOR1,
+                        BK_NUMERO_OP,
+                        EDAD,
+                        NUM_COMPRAS_ANTERIORES,
+                        CIUDAD_PROYECTO_DE_INTERES,
+                        FECHA_ULTIMA_COTIZACION)
         FROM ${ref("04_Obt_Cotizaciones_incremental")}
         WHERE DATE(FECHA_CARGUE_ML) = CURRENT_DATE()
         --WHERE FECHA_CARGUE_ML = '2026-05-26T10:53:43.343629'--CARGAS INCREMENTALES MANUALES
