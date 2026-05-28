@@ -1,0 +1,27 @@
+config {
+    type: "table",
+    tags: ["SERVING"],
+}
+
+
+SELECT 
+
+CURRENT_DATETIME('America/Bogota') AS FECHA_PREDICCION,
+${dataform.projectConfig.vars.threshold_prediccion} AS THRESHOLD_CLASIFICACION,
+
+*
+FROM
+
+--ML.PREDICT(MODEL `amrl-data-prd.SANDBOX_ML_EDUARDO_WORKSHOP.logreg_model`,
+ML.PREDICT(MODEL `${dataform.projectConfig.defaultSchema}.logreg_model${dataform.projectConfig.vars.version_produccion}` ,
+
+(
+    -- TODO: apuntar a los datos correctos para nuevas predicciones
+    SELECT * FROM ${ref("GOLD_NUEVOS")}
+),
+--STRUCT(0.7 AS THRESHOLD)
+
+STRUCT( ${dataform.projectConfig.vars.threshold_prediccion} AS threshold)
+
+
+)

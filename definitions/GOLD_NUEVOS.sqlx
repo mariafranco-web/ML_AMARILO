@@ -1,0 +1,64 @@
+config {
+    type: "table",
+    description: "Tabla con los datos ingestados y preparados para el modelo de ML.",
+    dependencies: ["02_SILVER_NUEVOS"],
+    name: "GOLD_NUEVOS",
+    tags: ["SERVING"],
+    columns: {
+      ACEPTAR_VENTA: "Variable objetivo del modelo, Y indica que el cliente llegó a la separación N indica que solo fue una visita",
+      BK_PERSONA: "Llvae primaria para identificar al cliente.",
+      NUMERO_COTIZACIONES_TOPADA: "Numero de cotizaciones que ha realizado la persona, topada a máximo 15 cotizaciones."
+
+    }
+    
+}
+
+SELECT 
+
+-- Identificadores y variable objetivo
+BK_NUMERO_OP
+,BK_PERSONA
+,ACEPTAR_VENTA
+, ABS(MOD(FARM_FINGERPRINT(BK_NUMERO_OP),100)) AS split_id
+
+
+-- Variables Numericas
+
+--,IMPORTE_TOTAL_OP_PRIMERA_VERSION
+,LEAST(1600000000, IMPORTE_TOTAL_OP_PRIMERA_VERSION) AS IMPORTE_TOTAL_OP_PRIMERA_VERSION_TOPADA
+,GREATEST(0,MONTO_CREDITO ) AS MONTO_CREDITO_TOPADO
+,AREA_CONSTRUIDA
+,LEAST(10,NUM_ASESORES_QUE_ATENDIERON ) AS NUM_ASESORES_QUE_ATENDIERON_TOPADA
+,GREATEST(0,TIEMPO_SEPARACION ) AS TIEMPO_SEPARACION
+,INGRESO_MENSUAL_MEDIA
+,LEAST(15, NUMERO_COTIZACIONES ) AS NUMERO_COTIZACIONES_TOPADA
+
+
+-- Variables Categoricas 
+
+, CASE
+     WHEN ENTIDAD_CREDITO IN ('ITAU COLOMBIA S.A.', 'BANCO DE BOGOTA S.A.', 'BANCOLOMBIA S.A.', 'SCOTIABANK COLPATRIA S.A.') THEN ENTIDAD_CREDITO
+     ELSE 'OTROS'
+  END AS ENTIDAD_CREDITO_AGRUPADA
+
+--,ENTIDAD_CREDITO
+
+, CASE
+    WHEN REFERIDO IN ('CLIENTE AMARILO', 'REFERIDO', 'REFERIDOS/CLIENTE AMARILO', 'FERIAS') THEN REFERIDO
+    ELSE 'OTROS'
+  END AS REFERIDO_AGRUPADA
+--,REFERIDO
+,TIPO_VENTA
+,OCUPACION_COMPRADOR1
+,TIPO_DE_ARTICULO
+,CLASE_DE_ARTICULO
+,AUTORIZA_MENSAJES_DE_TEXTO
+,AUTORIZA_CORREOS_ELECTRONICOS
+
+
+
+FROM ${ref("02_SILVER_NUEVOS")}
+
+
+
+
