@@ -5,9 +5,9 @@ config {
 ---------------------------------------------------
 -- MODELO BOOSTED TREE
 ---------------------------------------------------
-CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.10_boosted_tree_model_cotizaciones`
+CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.11_XGBOOST_cotizaciones_xidentificacion`
 OPTIONS(
-  MODEL_TYPE = 'BOOSTED_TREE_CLASSIFIER',
+  MODEL_TYPE = 'XGBOOST',
   INPUT_LABEL_COLS = ['COMPRO'],
   ---------------------------------------------------
   -- SPLIT
