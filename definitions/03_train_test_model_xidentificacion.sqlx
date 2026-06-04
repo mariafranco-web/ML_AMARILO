@@ -7,7 +7,7 @@ config {
 ---------------------------------------------------
 CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.11_XGBOOST_cotizaciones_xidentificacion`
 OPTIONS(
-  MODEL_TYPE = 'RANDOM_FOREST_CLASSIFIER',
+  MODEL_TYPE = 'BOOSTED_TREE_CLASSIFIER',
   INPUT_LABEL_COLS = ['COMPRO'],
   ---------------------------------------------------
   -- SPLIT
@@ -47,6 +47,8 @@ SELECT
         EDAD,
         NUM_COMPRAS_ANTERIORES,
         CIUDAD_PROYECTO_DE_INTERES,
-        FECHA_ULTIMA_COTIZACION
+        FECHA_ULTIMA_COTIZACION,
+        FECHA_ULTIMA_COMPRA,
+        OP_CREADA_POR
     )
 FROM ${ref("03_Obt_Cotizaciones_split_xidentificacion")}
