@@ -1,0 +1,8 @@
+
+config {
+    type: "declaration",
+    database: "amrl-data-prd",
+    schema: "WKS_COTIZACIONES_ML",
+    name: "02_Obt_Cotizaciones_xidentificacion",
+    description: "Data base para el modelo de cotizaciones unicas por comprador"
+}
