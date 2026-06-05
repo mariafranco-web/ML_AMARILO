@@ -5,7 +5,7 @@ config {
 ---------------------------------------------------
 -- MODELO BOOSTED TREE
 ---------------------------------------------------
-CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.11_XGBOOST_cotizaciones_xidentificacion`
+CREATE OR REPLACE MODEL `${dataform.projectConfig.defaultDatabase}.WKS_COTIZACIONES_ML.12_boosted_tree_model_cotizaciones_xidentificacion`
 OPTIONS(
   MODEL_TYPE = 'BOOSTED_TREE_CLASSIFIER',
   INPUT_LABEL_COLS = ['COMPRO'],
@@ -45,10 +45,6 @@ SELECT
         COMPRADOR1,
         BK_NUMERO_OP,
         EDAD,
-        NUM_COMPRAS_ANTERIORES,
-        CIUDAD_PROYECTO_DE_INTERES,
-        FECHA_ULTIMA_COTIZACION,
-        FECHA_ULTIMA_COMPRA,
-        OP_CREADA_POR
+        EGRESOS_MENSUALES
     )
 FROM ${ref("03_Obt_Cotizaciones_split_xidentificacion")}
