@@ -45,6 +45,10 @@ SELECT
         COMPRADOR1,
         BK_NUMERO_OP,
         EDAD,
-        EGRESOS_MENSUALES
+        EGRESOS_MENSUALES,
+        FECHA_ULTIMA_COMPRA,
+        NUM_DESISTIDOS,
+        NUM_COTIZACIONES_X_COMPRADOR,
+        OP_CREADA_POR        
     )
 FROM ${ref("03_Obt_Cotizaciones_split_xidentificacion")}
