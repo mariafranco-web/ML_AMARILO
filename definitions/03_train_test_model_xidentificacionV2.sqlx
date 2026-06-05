@@ -49,7 +49,7 @@ SELECT
         FECHA_ULTIMA_COMPRA,
         NUM_DESISTIDOS,
         NUM_COTIZACIONES_X_COMPRADOR,
-        NUM_COMPRAS_ANTERIORES
+        NUM_COMPRAS_ANTERIORES,
         OP_CREADA_POR        
     )
 FROM ${ref("03_Obt_Cotizaciones_split_xidentificacion_v2")}
