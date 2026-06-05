@@ -5,29 +5,12 @@ config {
     name: "03_Obt_Cotizaciones_split"
 }
 
-/*
-TRUE  → datos de prueba (test)
-FALSE → datos de entrenamiento (train)
-*/
-
-WITH base_data AS (
-    SELECT *,
-        RAND() AS random_val
-    FROM ${ref("02_Obt_Cotizaciones")}
-),
-
-stratified AS (
-    SELECT
-        *,
-        NTILE(5) OVER(
-            PARTITION BY COMPRO
-            ORDER BY random_val
-        ) AS fold
-    FROM base_data
-
-)
-
 SELECT
-    * EXCEPT(random_val, fold),
-    IF(fold = 1, TRUE, FALSE) AS IS_TEST
+    *,
+    CASE
+        WHEN FECHA_ULTIMA_COTIZACION >= DATE('2025-06-04')
+        THEN TRUE
+        ELSE FALSE
+    END AS IS_TEST
+FROM ${ref("02_Obt_Cotizaciones")}
 FROM stratified
