@@ -13,4 +13,3 @@ SELECT
         ELSE FALSE
     END AS IS_TEST
 FROM ${ref("02_Obt_Cotizaciones")}
-FROM stratified
