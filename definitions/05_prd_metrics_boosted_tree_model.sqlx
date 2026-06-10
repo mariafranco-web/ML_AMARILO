@@ -24,7 +24,7 @@ FROM ML.EVALUATE(
     ),
 
     STRUCT(
-        0.5 AS threshold
+        0.35 AS threshold
     )
 
 )

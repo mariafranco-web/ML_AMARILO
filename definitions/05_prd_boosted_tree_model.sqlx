@@ -2,7 +2,7 @@ config {
   type: "incremental",
   schema: "WKS_COTIZACIONES_ML",
   tags: ["MONITORING"],
-  name: "05_prd_boosted_tree_model",
+  name: "05_prd_boosted_tree_model_35",
   
 }
 
@@ -11,17 +11,19 @@ config {
 SELECT
    --TIMESTAMP('2026-06-01 07:26:05') AS FECHA_SCORING , --CARGAS INCREMENTALES MANUALES
    CURRENT_TIMESTAMP() AS FECHA_SCORING,
-    P.*
+   P.*
 
 FROM ML.PREDICT(
 
     MODEL `amrl-data-prd.WKS_COTIZACIONES_ML.01_boosted_tree_model_cotizaciones`,
     (
         SELECT
-            * 
-        FROM ${ref("04_Obt_Cotizaciones_incremental")}
+			  
+            * FROM ${ref("04_Obt_Cotizaciones_incremental")}
         WHERE DATE(FECHA_CARGUE_ML) = CURRENT_DATE("America/Bogota")
        --WHERE DATE(FECHA_CARGUE_ML) = '2026-06-01'--CARGAS INCREMENTALES MANUALES
-    )
+    ),
+    -- THRESHOLD
+    STRUCT(0.35 AS threshold)
 
 ) AS P
