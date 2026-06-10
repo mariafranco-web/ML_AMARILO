@@ -17,7 +17,7 @@ FROM ML.EVALUATE(
         FROM ${ref("04_Obt_Cotizaciones_incremental")}
     ),
     STRUCT(
-        0.35 AS threshold
+        0.45 AS threshold
     )
 
 )
