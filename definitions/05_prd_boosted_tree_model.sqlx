@@ -2,7 +2,7 @@ config {
   type: "incremental",
   schema: "WKS_COTIZACIONES_ML",
   tags: ["MONITORING"],
-  name: "05_prd_boosted_tree_model",
+  name: "05_prd_boosted_tree_model_35",
   
 }
 
