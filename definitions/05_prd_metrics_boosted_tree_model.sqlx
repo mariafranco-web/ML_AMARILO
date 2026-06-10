@@ -12,17 +12,10 @@ SELECT
     *
 
 FROM ML.EVALUATE(
-
     MODEL `amrl-data-prd.WKS_COTIZACIONES_ML.01_boosted_tree_model_cotizaciones`,
-
-    (
-
-        SELECT
-            * 
+    (   SELECT* 
         FROM ${ref("04_Obt_Cotizaciones_incremental")}
-
     ),
-
     STRUCT(
         0.35 AS threshold
     )
