@@ -1,11 +1,11 @@
 config {
-    
+    type: "incremental",
     tags: ["MONITORING"],
     name: "05_prd_monitoring_metricas_modelo",
     description: "Tabla histórica para monitorear las métricas del modelo en el tiempo."
 }
 
---type: "incremental",
+
 
 SELECT 
 
